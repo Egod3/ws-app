@@ -13,3 +13,11 @@
 &usart2 {
 	current-speed = <230400>;
 };
+
+&i2c1 {
+	si7021: si7021@40 {
+		compatible = "silabs,si7006";
+		reg = <0x40>;
+		status = "okay";
+	};
+};
