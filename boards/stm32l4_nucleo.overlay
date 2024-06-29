@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) 2024 Ezra Godfrey
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+	 aliases {
+		uart0 = &usart2;
+	};
+};
+
+&usart2 {
+	current-speed = <230400>;
+};
