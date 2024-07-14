@@ -108,12 +108,12 @@ static int serial_num(const struct shell* sh)
 
 /* Creating subcommands (level 1 command) array for command "si70xx". */
 SHELL_STATIC_SUBCMD_SET_CREATE(sub_si20xx,
-        SHELL_CMD(temp, NULL, "get temperature", temp),
-        SHELL_CMD(humid,   NULL, "get humidity", humid),
-        SHELL_CMD(sensor_id,   NULL, "get sensor ID", sensor_id),
-        SHELL_CMD(serial_num,   NULL, "get serial number", serial_num),
-        SHELL_CMD(fw_version,   NULL, "get firmware version", fw_version),
-        SHELL_CMD(reset,   NULL, "reset the sensor", si70xx_reset),
+        SHELL_CMD(temp,         NULL, "get temperature",        temp),
+        SHELL_CMD(humid,        NULL, "get humidity",           humid),
+        SHELL_CMD(sensor_id,    NULL, "get sensor ID",          sensor_id),
+        SHELL_CMD(serial_num,   NULL, "get serial number",      serial_num),
+        SHELL_CMD(fw_version,   NULL, "get firmware version",   fw_version),
+        SHELL_CMD(reset,        NULL, "reset the sensor",       si70xx_reset),
         SHELL_SUBCMD_SET_END
 );
 /* Creating root (level 0) command "si70xx" */
