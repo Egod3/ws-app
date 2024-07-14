@@ -8,7 +8,7 @@ ws-app
 Overview
 ********
 
-<TODO: Fill in>
+The purpose is to collect and display environmental weather and climate data to the user.
 
 Build and Flash
 ***************
@@ -31,3 +31,6 @@ Test
 - To test the build and flash procedure was a success, you can connect to uart as follows:
 
   $ tio /dev/ttyACM0 -b 230400
+
+- Run the `help` command to see what shell commands are available.
+- Run `si70xx temp` or `si70xx humid` to see temperature and relative humidtiy.

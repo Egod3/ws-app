@@ -50,7 +50,14 @@ static int fw_version(const struct shell* sh)
         shell_print(sh, "failed to get the Firmware version, status: %d", status);
         return status;
     }
-    shell_print(sh, "firmware version: 0x%x ", fw_ver );
+    // shell_print(sh, "firmware version: 0x%x ", fw_ver );
+    if( fw_ver == SI70XX_I2C_FW_REV_1_0 ) {
+        shell_print(sh, "Firware version is 1.0");
+    } else if( fw_ver == SI70XX_I2C_FW_REV_2_0 ) {
+        shell_print(sh, "Firware version is 2.0");
+    } else {
+        shell_print(sh, "%s: error could not detect FW version. fw_ver:0x%x", __func__, fw_ver);
+    }
 
     return status;
 }
@@ -75,6 +82,7 @@ static int serial_num(const struct shell* sh)
 {
     int32_t     status = -1;
     u_int8_t    sensor_id_01 = 0x0;
+    u_int8_t    version_id = 0;
     u_int64_t   serial_num = 0;
 
     status = si70xx_get_sensor_id(&sensor_id_01, &serial_num);
@@ -83,6 +91,17 @@ static int serial_num(const struct shell* sh)
         return status;
     }
     shell_print(sh, "serial_num: 0x%llx", serial_num);
+
+    version_id = (((serial_num & 0xFF000000) >> 24));
+    if( version_id == SI70XX_I2C_SENSOR_VER_13 ){
+        shell_print(sh, "electronic serial number for the Si7013 sensor");
+    } else if( version_id == SI70XX_I2C_SENSOR_VER_20 ){
+        shell_print(sh, "electronic serial number for the Si7020 sensor");
+    } else if( version_id == SI70XX_I2C_SENSOR_VER_21 ) {
+        shell_print(sh, "electronic serial number for the Si7021 sensor");
+    } else {
+        shell_print(sh, "%s: error could not detect electric serial number. version_id:0x%x", __func__, version_id);
+    }
 
     return status;
 }
@@ -94,6 +113,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sub_si20xx,
         SHELL_CMD(sensor_id,   NULL, "get sensor ID", sensor_id),
         SHELL_CMD(serial_num,   NULL, "get serial number", serial_num),
         SHELL_CMD(fw_version,   NULL, "get firmware version", fw_version),
+        SHELL_CMD(reset,   NULL, "reset the sensor", si70xx_reset),
         SHELL_SUBCMD_SET_END
 );
 /* Creating root (level 0) command "si70xx" */

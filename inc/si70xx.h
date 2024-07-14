@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <sys/types.h>
+#include <zephyr/shell/shell.h>
 
 #define SI70XX_I2C_ADDR                             0x40
 #define SI70XX_I2C_NAME                             "Si70xx"
@@ -34,5 +35,6 @@ double   convert_and_print_temp(u_int16_t raw_temp);
 double   convert_and_print_humid(u_int16_t raw_humid);
 int32_t si70xx_get_fw(u_int8_t* fw_ver);
 int32_t si70xx_get_sensor_id(u_int8_t* sensor_id, u_int64_t* serial_num);
+int32_t si70xx_reset(const struct shell* sh);
 
 #endif /*  __si70xx__H__  */

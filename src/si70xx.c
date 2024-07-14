@@ -107,31 +107,27 @@ int32_t si70xx_get_fw(u_int8_t* fw_ver)
     return 0;
 }
 
-/*      0x0D = Si7013
-        0x14 = Si7020
-        0x15 = Si7021       */
-void print_elec_serl_num(int8_t fw_id)
-{
-    if( fw_id == SI70XX_I2C_SENSOR_VER_13 )
-        LOG_DBG("Electric serial number for the Si7013 sensor.\n");
-    else if( fw_id == SI70XX_I2C_SENSOR_VER_20 )
-        LOG_DBG("Electric serial number for the Si7020 sensor.\n");
-    else if( fw_id == SI70XX_I2C_SENSOR_VER_21 )
-        LOG_DBG("Electric serial number for the Si7021 sensor.\n");
-    else
-        LOG_DBG("%s: error could not detect electric serial number. fw_id:0x%x\n", __func__, fw_id);
-}
+/*  Return - 0 means success, negative value is failure.
 
-/*      0xFF = Firmware version 1.0
-        0x20 = Firmware version 2.0     */
-void print_fw_ver(u_int8_t fw_rev)
+    void
+*/
+int32_t si70xx_reset(const struct shell* sh)
 {
-    if( fw_rev == SI70XX_I2C_FW_REV_1_0 )
-        LOG_DBG("Firware version is 1.0.\n");
-    else if( fw_rev == SI70XX_I2C_FW_REV_2_0 )
-        LOG_DBG("Firware version is 2.0.\n");
-    else
-        LOG_ERR("%s: error could not detect FW version. fw_rev:0x%x\n", __func__, fw_rev);
+    int32_t                     ret     = -1;
+    u_int8_t                    write_buf[1];
+    u_int8_t                    read_buf[1];
+    memset(read_buf, 0, 1);
+    memset(write_buf, 0, 1);
+
+    write_buf[0] = 0xFE;
+    ret = i2c_write(i2c_dev, (u_int8_t*)write_buf, 1, SI70XX_I2C_ADDR);
+    if( ret != 0 ){
+        shell_print(sh, "i2c_write() failed w/ err: %d", ret);
+        return ret;
+    }
+    ret = i2c_read(i2c_dev, (u_int8_t*)read_buf, 1, SI70XX_I2C_ADDR);
+
+    return 0;
 }
 
 int32_t init_i2c_device()
@@ -189,22 +185,6 @@ int32_t verify_si70xx_version(u_int64_t* serial_num)
 
     LOG_ERR("Error one of FW version, sensor ID 01, or sensor ID 02 did not match!\n");
     return -5;
-}
-
-double convert_and_print_temp(u_int16_t raw_temp)
-{
-    double       double_temp      = 0.0;
-    double_temp = ((((double)raw_temp * 175.72)/65536.0)-46.85);
-    LOG_DBG("Temperature: %lf C \t%lf F\n", double_temp, ((1.8*double_temp)+32.0));
-    return double_temp;
-}
-
-double convert_and_print_humid(u_int16_t raw_humid)
-{
-    double       double_rel_humid = 0.0;
-    double_rel_humid = ((((double)raw_humid * 125.0)/65536.0) - 6.0);
-    printf("Relative Humidity: %lf %%\n", double_rel_humid );
-    return double_rel_humid;
 }
 
 /*
