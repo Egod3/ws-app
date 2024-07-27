@@ -12,4 +12,5 @@ target_sources(app PRIVATE
 	src/main.c
 	src/si70xx.c
 	src/si70xx_shell.c
+	src/app_version_shell.c
 )
