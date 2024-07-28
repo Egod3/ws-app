@@ -13,24 +13,30 @@ The purpose is to collect and display environmental weather and climate data to 
 Build and Flash
 ***************
 
-- To build the application make sure you have the python virtural environment activated:
+- To build the application make sure you have the python virtural environment activated::
 
-  $ source /mnt/NAS/data/git/rust_embd/oses/zephyrproject/.venv/bin/activate
+  $ source ~/zephyrproject/.venv/bin/activate
 
-- Then run ``west build`` for the board you want. example:
+- Then run ``west build`` for the board you want::
 
   $ west build -b nucleo_l476rg -p
 
-- Run ``west flash``:
+- Run ``west flash``::
 
   $ west flash
 
 Test
 ****
 
-- To test the build and flash procedure was a success, you can connect to uart as follows:
+- To test the build and flash procedure was a success, you can connect to UART as follows::
 
-  $ tio /dev/ttyACM0 -b 230400
+  $ tio /dev/ttyACM0 -b 460800
 
-- Run the `help` command to see what shell commands are available.
-- Run `si70xx temp` or `si70xx humid` to see temperature and relative humidtiy.
+- Run the ``help`` command to see what shell commands are available.
+- Run ``si70xx temp`` or ``si70xx humid`` to see temperature and relative humidtiy.
+- Type ``si70xx`` followed by ``<TAB>`` and you will see all the options.
+
+Updating this file
+******************
+
+- Within the python venv use ``restview README.rst`` to view this file in a browser.

@@ -11,7 +11,7 @@
 };
 
 &usart2 {
-	current-speed = <230400>;
+	current-speed = <460800>;
 };
 
 &i2c1 {
