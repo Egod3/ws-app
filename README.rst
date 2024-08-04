@@ -30,7 +30,6 @@ Test
 
 - To test the build and flash procedure was a success, you can connect to uart as follows:
 
-  $ tio /dev/ttyACM0 -b 230400
+  $ tio /dev/ttyACM0 -b 460800
 
 - Run the `help` command to see what shell commands are available.
-- Run `si70xx temp` or `si70xx humid` to see temperature and relative humidtiy.
